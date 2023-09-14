@@ -21,7 +21,7 @@ const Search = () => {
 
         <form onSubmit={searchMovie}>
    
-            <div className="w-[512px] h-[36px] border-[2px] rounded-[6px] border-[#D1D5DB] sm:flex hidden justify-between items-center px-3">
+            <div className="lg:w-[512px] md:w-[450px] ss:w-[350px] xs:w-[250px] sx:w-[220px]  h-[36px] border-[2px] rounded-[6px] border-[#D1D5DB] flex justify-between items-center px-3">
               <input
                 className="w-[100%] h-[100%]  text-white bg-transparent outline-none"
                 type="text"
@@ -33,23 +33,6 @@ const Search = () => {
               />
    
           </div>
-          </form>
-          
-        <form onSubmit={searchMovie}>
-            <div className="px-4 flex sm:hidden">
-            <div className="w-[100%] h-[36px]  border-[2px] rounded-[6px] border-[#D1D5DB] flex sm:hidden justify-between items-center px-3">
-              <input
-                className="w-[100%] h-[100%]  text-white bg-transparent outline-none"
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-              />
-              <Image src={search} width={16} height={16} alt=""
-                 
-              />
-   
-          </div>
-            </div>
         </form>
      
     </div>
