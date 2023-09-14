@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import Link from "next/link"
+
 
 
 
@@ -66,10 +66,7 @@ const page = () => {
       {movies.map((movie: IMovie, key: number) => {
         return (
           <div key={key}>
-            <Link
-                href={`/movie/${movie.id}`}
-                title={`More information about ${movie.title}`}
-              >
+            
            <div className="sm:w-[250px] h-[370px] w-[100%] ">
            <img
                   src={`https://image.tmdb.org/t/p/original${
@@ -86,7 +83,7 @@ const page = () => {
             {isImgLoading && <Loading />}
             <h5 className="text-white">{movie.title}</h5>
             <h5 className="text-white">{movie.release_date}</h5>
-            </Link>
+            
           </div>
             
         );
