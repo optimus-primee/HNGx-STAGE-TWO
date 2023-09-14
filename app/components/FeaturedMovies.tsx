@@ -85,7 +85,7 @@ function FeaturedMovies() {
   return (
    <div className="sm:px-24 px-6">
     <div>
-      <h2 className="sm:text-[36px] text-[28px] font-bold -mt-20 sm:mb-10 mb-3">Featured Movie</h2>
+      <h2 className="sm:text-[36px] text-[28px] font-bold mb-3">Featured Movie</h2>
     </div>
      <div className="grid sm:grid-cols-4 w-[100%] sm:gap-y-20 gap-y-20  overflow-x-hidden">
      
