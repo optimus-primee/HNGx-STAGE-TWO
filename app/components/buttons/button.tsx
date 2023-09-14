@@ -53,7 +53,7 @@ const getVariant = (variant?: VariantType) => {
    
           ${getVariant(variant)}  transition duration-75  ${
           !paddingLess && "sm:px-[16px] sm:py-[6px] px-4 py-2.5 text-sm"
-        }  ${!square && "rounded sm:rounded-[5px]"} active:scale-95 ${className}  ${!iconPresent &&
+        }  ${!square && "rounded-[5px]"} active:scale-95 ${className}  ${!iconPresent &&
             "flex justify-center items-center gap-2"} text-sm font-medium uppercase`} 
       >
          {imgSrc && <Image src={imgSrc} alt="" width={20} height={20} />} 
