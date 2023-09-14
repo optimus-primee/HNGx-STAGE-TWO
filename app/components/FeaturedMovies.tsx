@@ -5,6 +5,7 @@ import Loading from "./Loading";
 import Link from "next/link";
 import imdb from "../assests/images/imdb.png";
 import Image from "next/image";
+import tom from "../assests/images/tom.png";
 
 function FeaturedMovies() {
   const [movies, setMovies] = useState<IMovie[] | null>(null);
@@ -105,15 +106,22 @@ function FeaturedMovies() {
                   {movie.release_date}
                 </h2>
                 <h2 className="text-[#4f70b7] text-[18px]">{movie.title}</h2>
-                <div>
-                  {" "}
-                  <Image src={imdb} alt="" width={35} height={17} />
-                  <h2 className="text-[#9CA3AF] text-[12px]">
-                    {movie.vote_average}/100
-                  </h2>
+                <div className="flex justify-between items-center w-[250px]">
+                  <div className="flex gap-2 items-center">
+                    <Image src={imdb} alt="" width={35} height={17} />
+                    <h2 className="text-[#9CA3AF] text-[12px]">
+                      {movie.vote_average}/100
+                    </h2>
+                  </div>
+                  <div className="flex gap-2">
+                  <Image src={tom} alt="" width={16} height={17} />
+                    <h2 className="text-[#9CA3AF] text-[12px]">
+                      {movie.randomPercentage.toFixed(1)}%
+                    </h2>
+
+                  </div>
                 </div>
-                <h2>Genres: {getGenreNames(movie.genre_ids).join(", ")}</h2>
-                <h2>Random Percentage: {movie.randomPercentage.toFixed(1)}%</h2>
+                <h2 className="text-[#9CA3AF] text-[12px] font-bold">{getGenreNames(movie.genre_ids).join(", ")}</h2>
               </Link>
             )}
           </div>
