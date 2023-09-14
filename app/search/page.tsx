@@ -67,7 +67,9 @@ const page = () => {
           <div key={key}>
            <div className="sm:w-[250px] h-[370px] w-[100%] ">
            <img
-                  src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                  src={`https://image.tmdb.org/t/p/original${
+            movie?.backdrop_path || movie?.poster_path
+          }`}
                   alt={movie.title}
                   className="w-[100%] h-[100%] object-cover "
                   onLoad={() => setIsImgLoading(false)}
