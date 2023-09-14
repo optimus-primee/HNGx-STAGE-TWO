@@ -83,7 +83,7 @@ function FeaturedMovies() {
   }, []);
 
   return (
-    <div className="grid sm:grid-cols-4 w-[100%] sm:px-24 px-6 overflow-x-hidden">
+    <div className="grid sm:grid-cols-4 w-[100%] sm:gap-y-20 gap-y-20 sm:px-24 px-6 overflow-x-hidden">
       {isLoading ? (
         <Loading />
       ) : (
