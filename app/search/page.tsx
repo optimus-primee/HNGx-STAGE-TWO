@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Link from "next/link"
 
 
 
@@ -85,8 +86,9 @@ const page = () => {
             {isImgLoading && <Loading />}
             <h5 className="text-white">{movie.title}</h5>
             <h5 className="text-white">{movie.release_date}</h5>
-              </Link>
+            </Link>
           </div>
+            
         );
       })}
     </div>
