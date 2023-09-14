@@ -52,7 +52,7 @@ const getVariant = (variant?: VariantType) => {
         className={`
    
           ${getVariant(variant)}  transition duration-75  ${
-          !paddingLess && "sm:px-[16px] sm:py-[6px] px-4.5 py-2.5 text-sm"
+          !paddingLess && "sm:px-[16px] sm:py-[6px] px-5 py-2.5 text-sm"
         }  ${!square && "rounded-[5px]"} active:scale-95 ${className}  ${!iconPresent &&
             "flex justify-center items-center gap-2"} text-sm font-medium uppercase`} 
       >
