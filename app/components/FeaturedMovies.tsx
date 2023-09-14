@@ -21,6 +21,7 @@ function FeaturedMovies() {
         id: string;
       }
     ];
+    backdrop_path: string;
   }
 
   useEffect(() => {
@@ -53,7 +54,7 @@ function FeaturedMovies() {
   }, []);
 
   return (
-    <div className="grid grid-cols-4 px-24 overflow-x-hidden">
+    <div className="grid sm:grid-cols-4 w-[100%] sm:px-24 px-6 overflow-x-hidden">
       {isLoading ? (
         <Loading />
       ) : (
@@ -62,10 +63,13 @@ function FeaturedMovies() {
           <div key={movie.id}>
             {movie.imdb_id && (
               <Link href={`/movie/${movie.imdb_id}`} title={`More information about ${movie.title}`}>
-                <img
-                  src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              <div className="sm:w-[250px] h-[370px] w-[100%] ">
+              <img
+                  src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
                   alt={movie.title}
+                  className="w-[100%] h-[100%] object-cover "
                 />
+              </div>
                 <h2>{movie.title}</h2>
               </Link>
             )}
