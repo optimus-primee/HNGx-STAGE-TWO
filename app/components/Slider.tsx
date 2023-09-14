@@ -65,17 +65,19 @@ function Slider() {
           <div className="z-1 w-[100%] sm:h-[80%] h-[60%] overflow-hidden" key={index}>
             {index === current && (
               <div className="bg-gradient-to-b from-black via-transparent to-transparent absolute top-0 left-0 w-[100%] sm:h-[80vh] h-[60vh] ">
-                <Image
+                 <img
                   src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
-                  alt=""
-                  layout="fill" // This will make the Image fill its parent
-                  objectFit="cover" // This will make the Image cover the entire parent
-                  onLoadingComplete={() => setIsImgLoading(false)}
-                  priority
+                  alt={movie.title}
+                  className="w-[100%] h-[100%] object-cover "
+                  onLoad={() => setIsImgLoading(false)}
+        
+               
+
                 />
+                
                 {isImgLoading && <Loading />}
                 <div className="absolute top-[30%]  text-white z-10 sm:px-24 ss:px-8 xs:px-5 px-4 ">
-                  <h1 className="capitalize text-[48px] w-[400px] h-[60px] overflow-hidden">
+                  <h1 className="capitalize text-[48px] sm:w-[400px] h-[60px] overflow-hidden">
                     {movie.title}
                   </h1>
                   <div className="flex items-center gap-8 mt-4">
@@ -88,7 +90,7 @@ function Slider() {
                       <h5 className="text-[12px]">97%</h5>
                     </div>
                   </div>
-                  <p className="w-[300px] h-[80px] overflow-hidden   text-sm my-4">
+                  <p className="sm:w-[300px] h-[80px] overflow-hidden   text-sm my-4">
                     {movie.overview}
                   </p>
                   <Button
