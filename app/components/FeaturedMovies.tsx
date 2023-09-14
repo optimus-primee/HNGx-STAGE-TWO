@@ -15,14 +15,35 @@ function FeaturedMovies() {
     title: string;
     vote_average: number;
     release_date: string;
-    genre_ids: [
-      {
-        name: string;
-        id: string;
-      }
-    ];
+    genre_ids: number[]; // Change genre_ids to be an array of numbers
     backdrop_path: string;
   }
+  const genreMap: { [key: number]: string } = {
+    28: 'Action',
+    12: 'Adventure',
+    16: 'Animation',
+    35: 'Comedy',
+    80: 'Crime',
+    99: 'Documentary',
+    18: 'Drama',
+    10751: 'Family',
+    14: 'Fantasy',
+    36: 'History',
+    27: 'Horror',
+    10402: 'Music',
+    9648: 'Mystery',
+    10749: 'Romance',
+    878: 'Science Fiction',
+    10770: 'TV Movie',
+    53: 'Thriller',
+    10752: 'War',
+    37: 'Western',
+  };
+
+  // Function to get the genre names for a movie
+  const getGenreNames = (genreIds: number[]): string[] => {
+    return genreIds.map((genreId) => genreMap[genreId]);
+  };
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -42,7 +63,6 @@ function FeaturedMovies() {
         );
 
         setMovies(moviesWithImdbId);
-       console.log(moviesWithImdbId);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching movies:", error);
@@ -63,14 +83,17 @@ function FeaturedMovies() {
           <div key={movie.id}>
             {movie.imdb_id && (
               <Link href={`/movie/${movie.imdb_id}`} title={`More information about ${movie.title}`}>
-              <div className="sm:w-[250px] h-[370px] w-[100%] ">
-              <img
-                  src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
-                  alt={movie.title}
-                  className="w-[100%] h-[100%] object-cover "
-                />
-              </div>
+                <div className="sm:w-[250px] h-[370px] w-[100%] ">
+                  <img
+                    src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                    alt={movie.title}
+                    className="w-[100%] h-[100%] object-cover "
+                  />
+                </div>
                 <h2>{movie.title}</h2>
+                <h2>{movie.release_date}</h2>
+                <h2>{movie.vote_average}</h2>
+                <h2>Genres: {getGenreNames(movie.genre_ids).join(", ")}</h2>
               </Link>
             )}
           </div>
