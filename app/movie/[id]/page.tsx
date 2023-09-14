@@ -5,7 +5,7 @@ import axios from "axios";
 
 import MovieDetail from "@/app/components/MovieDetail";
 interface Params {
-  imdb_id: string; 
+  id: string; 
 }
 function MovieDetailsPage({ params }: { params: Params }){
   const [movie, setMovie] = useState(null);
@@ -14,13 +14,13 @@ function MovieDetailsPage({ params }: { params: Params }){
 
   const TMDB_API_KEY = process.env.NEXT_PUBLIC_MOVIE_DB_API_KEY;
   const router = useRouter();
-  const { imdb_id } = params;
+  const { id } = params;
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
         const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${imdb_id}?api_key=${TMDB_API_KEY}&language=en-US`
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=en-US`
         );
         const movieData = response.data;
         setMovie(movieData);

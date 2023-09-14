@@ -42,7 +42,7 @@ function MovieDetail({ movie }: { movie: IMovie }) {
           minHeight: "60vh",
           backgroundColor: "#000",
         }}
-        key={movie.imdb_id}
+        key={movie.id}
       >
   
         <div className="movie-inner" style={{ zIndex: 20 }}>
