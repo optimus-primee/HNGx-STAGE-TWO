@@ -23,6 +23,7 @@ const page = () => {
     poster_path: string;
     title: string;
     release_date: string;
+    backdrop_path: string;
    
   }
 
@@ -58,21 +59,23 @@ const page = () => {
   }, []);
 
   return (
-    <div className="relative px-24 pt-32 grid grid-cols-4 w-[100%] bg-black">
+    <div className="relative sm:px-24 px-6 pt-32 grid sm:grid-cols-4 w-[100%] bg-black">
       
       {isLoading && <Loading />}
       {movies.map((movie: IMovie, key: number) => {
         return (
           <div key={key}>
-          
-            <Image
-              src={`https://image.tmdb.org/t/p/w500/${movie?.poster_path}`}
-              width={250}
-                height={370} 
-              alt="No movie poster"
-              onLoadingComplete={() => setIsImgLoading(false)}
-              priority
-            />
+           <div className="sm:w-[250px] h-[370px] w-[100%] ">
+           <img
+                  src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                  alt={movie.title}
+                  className="w-[100%] h-[100%] object-cover "
+                  onLoad={() => setIsImgLoading(false)}
+        
+               
+
+                />
+            </div>
             {isImgLoading && <Loading />}
             <h5 className="text-white">{movie.title}</h5>
             <h5 className="text-white">{movie.release_date}</h5>
