@@ -9,7 +9,7 @@ import Link from "next/link";
 const Navbar = () => {
   return (
     <div className="absolute w-[100%] z-10">
-      <div className="py-4 lg:px-24 md:px-12 ss:px-8 xs:px-5 px-4 flex justify-between items-center">
+      <div className="py-4 lg:px-24  px-4 flex justify-between items-center">
       
           <Link href="/" >
           <div className="flex gap-6 items-center">
@@ -20,7 +20,9 @@ const Navbar = () => {
           </Link>
        
         <div>
-          <Search />
+       <div className="sm:flex hidden">
+           <Search />
+       </div>
         </div>
         <div>
           <div className="flex sm:gap-7 xs:gap-5 gap-4 items-center">
