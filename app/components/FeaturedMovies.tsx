@@ -83,7 +83,12 @@ function FeaturedMovies() {
   }, []);
 
   return (
-    <div className="grid sm:grid-cols-4 w-[100%] sm:gap-y-20 gap-y-20 sm:px-24 px-6 overflow-x-hidden">
+   <div className="sm:px-24 px-6">
+    <div>
+      <h2 className="sm:text-[36px] text-[28px] font-bold -mt-20 sm:mb-10">Featured Movie</h2>
+    </div>
+     <div className="grid sm:grid-cols-4 w-[100%] sm:gap-y-20 gap-y-20  overflow-x-hidden">
+     
       {isLoading ? (
         <Loading />
       ) : (
@@ -102,10 +107,10 @@ function FeaturedMovies() {
                     className="w-[100%] h-[100%] object-cover "
                   />
                 </div>
-                <h2 className="text-[#9CA3AF] text-[12px] font-bold">
+                <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
                   {movie.release_date}
                 </h2>
-                <h2 className="text-[#4f70b7] text-[18px]">{movie.title}</h2>
+                <h2 className="text-[#4f70b7] text-[18px] my-3">{movie.title}</h2>
                 <div className="flex justify-between items-center w-[250px]">
                   <div className="flex gap-2 items-center">
                     <Image src={imdb} alt="" width={35} height={17} />
@@ -121,13 +126,14 @@ function FeaturedMovies() {
 
                   </div>
                 </div>
-                <h2 className="text-[#9CA3AF] text-[12px] font-bold">{getGenreNames(movie.genre_ids).join(", ")}</h2>
+                <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">{getGenreNames(movie.genre_ids).join(", ")}</h2>
               </Link>
             )}
           </div>
         ))
       )}
     </div>
+   </div>
   );
 }
 
