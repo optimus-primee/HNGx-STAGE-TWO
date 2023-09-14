@@ -13,10 +13,11 @@ function FeaturedMovies() {
     id: string;
     imdb_id: string | null;
     title: string;
-    vote_average: number;
+    vote_average: string;
     release_date: string;
     genre_ids: number[]; // Change genre_ids to be an array of numbers
     backdrop_path: string;
+    randomPercentage: number;
   }
   const genreMap: { [key: number]: string } = {
     28: 'Action',
@@ -44,6 +45,10 @@ function FeaturedMovies() {
   const getGenreNames = (genreIds: number[]): string[] => {
     return genreIds.map((genreId) => genreMap[genreId]);
   };
+   // Function to generate a random percentage between min and max
+   const getRandomPercentage = (min: number, max: number): number => {
+    return Math.random() * (max - min) + min;
+  };
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -58,6 +63,7 @@ function FeaturedMovies() {
               `https://api.themoviedb.org/3/movie/${movie.id}?api_key=ca0825715c06ebe0d0621ba9ead36000`
             );
             movie.imdb_id = imdbResponse.data.imdb_id || null;
+            movie.randomPercentage = getRandomPercentage(0, 100); // Generate a random percentage
             return movie;
           })
         );
@@ -94,6 +100,7 @@ function FeaturedMovies() {
                 <h2>{movie.release_date}</h2>
                 <h2>{movie.vote_average}</h2>
                 <h2>Genres: {getGenreNames(movie.genre_ids).join(", ")}</h2>
+                <h2>Random Percentage: {movie.randomPercentage.toFixed(1)}%</h2>
               </Link>
             )}
           </div>
