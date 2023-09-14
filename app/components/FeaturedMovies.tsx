@@ -111,7 +111,7 @@ function FeaturedMovies() {
                   {movie.release_date}
                 </h2>
                 <h2 className="text-[#4f70b7] text-[18px] my-3">{movie.title}</h2>
-                <div className="flex justify-between items-center w-[250px]">
+                <div className="flex justify-between items-center sm:w-[250px] w-[100%]">
                   <div className="flex gap-2 items-center">
                     <Image src={imdb} alt="" width={35} height={17} />
                     <h2 className="text-[#9CA3AF] text-[12px]">
