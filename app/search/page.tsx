@@ -8,6 +8,7 @@ import axios from "axios";
 import { BsPlayFill } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import dynamic from "next/dynamic";
+import Search from "../components/Search";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
@@ -91,6 +92,9 @@ const Page = () => {
 
   return (
     <div className="">
+     <div className="sm:hidden flex pt-3 mx-4 w-[100%]">
+     <Search/>
+     </div>
       {isLoading && <Loading />}
 
       <div className="">

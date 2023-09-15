@@ -34,6 +34,11 @@ const Search = () => {
           <Image src={search} width={16} height={16} alt="" />
         </div>
       </form>
+      <form onSubmit={searchMovie}>
+       
+
+       
+      </form>
     </div>
   );
 };
