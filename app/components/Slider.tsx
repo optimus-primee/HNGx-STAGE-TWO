@@ -80,7 +80,7 @@ const Slider:React.FC=() =>{
                 
                 {isImgLoading && <Loading />}
                 <div className="absolute top-[30%]  text-white z-10 sm:px-24 ss:px-8 xs:px-5 px-4 ">
-                  <h1 className="capitalize text-[48px] sm:w-[400px] h-[60px] overflow-hidden">
+                  <h1 className="capitalize text-[48px] sm:w-[400px] h-[60px] overflow-hidden" data-testid="movie-title">
                     {movie.title}
                   </h1>
                   <div className="flex items-center gap-8 mt-4">
