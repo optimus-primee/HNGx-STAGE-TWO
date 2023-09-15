@@ -1,9 +1,11 @@
-
+"use client"
 import "./globals.css";
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 
 import Bottom from "./components/bottom";
+import { ToastContainer } from "./components/nexttoast";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -27,6 +29,7 @@ export default function RootLayout({
         {children}
      
 <Bottom/>
+<ToastContainer/>
       </body>
     </html>
   );

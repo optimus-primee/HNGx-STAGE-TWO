@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import Link from "next/link";
@@ -7,9 +7,9 @@ import axios from "axios";
 import imdb from "../assests/images/imdb.png";
 import Image from "next/image";
 import tom from "../assests/images/tom.png";
+import { toast } from "react-toastify";
 
 import dynamic from "next/dynamic";
-
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
@@ -18,7 +18,7 @@ const FeaturedMovies = () => {
     poster_path: string;
     backdrop_path: string;
     title: string;
-    genre_ids: number[]; 
+    genre_ids: number[];
     original_language: string;
     release_date: string;
     runtime: string;
@@ -50,7 +50,6 @@ const FeaturedMovies = () => {
     37: "Western",
   };
 
-  
   // Function to get the genre names for a movie
   const getGenreNames = (genreIds: number[]): string[] => {
     return genreIds.map((genreId) => genreMap[genreId]);
@@ -59,7 +58,6 @@ const FeaturedMovies = () => {
   const getRandomPercentage = (min: number, max: number): number => {
     return Math.random() * (max - min) + min;
   };
-
 
   const [movies, setMovies] = useState<IMovie[]>([]); // Use an array to store multiple movies
   const [isLoading, setIsLoading] = useState(false);
@@ -70,9 +68,10 @@ const FeaturedMovies = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    
     axios
-      .get(`https://api.themoviedb.org/3/movie/top_rated?api_key=ca0825715c06ebe0d0621ba9ead36000&language=en-US&page=1`)
+      .get(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=ca0825715c06ebe0d0621ba9ead36000&language=en-US&page=1`
+      )
       .then((res) => {
         // Extract the array of movie results
         const movieResults = res?.data?.results || [];
@@ -87,15 +86,47 @@ const FeaturedMovies = () => {
           setIsLoading(false);
         }
       });
-      // Generate a random percentage for each movie and add it to the results
-      const moviesWithRandomPercentage = movies.map((movie) => ({
-        ...movie,
-        randomPercentage: getRandomPercentage(0, 100), // Adjust the range as needed
-      }));
+    // Generate a random percentage for each movie and add it to the results
+    const moviesWithRandomPercentage = movies.map((movie) => ({
+      ...movie,
+      randomPercentage: getRandomPercentage(0, 100), // Adjust the range as needed
+    }));
 
-      // Store the movie results in the state
-      setMovies(moviesWithRandomPercentage);
+    // Store the movie results in the state
+    setMovies(moviesWithRandomPercentage);
   }, []);
+
+  const [notificationType, setNotificationType] = useState("success");
+
+  // Function to toggle between success and error toast
+  const toggleToast = () => {
+    if (notificationType === "success") {
+      toast.success("🦄 Wow so easy!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      toast.error("❌ Something went wrong!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+
+    // Toggle the notification type
+    setNotificationType(notificationType === "success" ? "error" : "success");
+  };
 
   const loadMovieDetails = (movieId: number) => {
     axios
@@ -103,20 +134,15 @@ const FeaturedMovies = () => {
         `https://api.themoviedb.org/3/movie/${movieId}?api_key=ca0825715c06ebe0d0621ba9ead36000&append_to_response=videos`
       )
       .then((res) => {
-      
-        
         setMovie(res.data);
         setIsLoading(false);
         console.log(res.data);
-        
       });
   };
 
   return (
     <div className="">
-      <div className="sm:hidden flex pt-3 mx-4 w-[100%]">
-        
-      </div>
+      <div className="sm:hidden flex pt-3 mx-4 w-[100%]"></div>
       {isLoading && <Loading />}
 
       <div className="">
@@ -125,39 +151,38 @@ const FeaturedMovies = () => {
             <div key={movie.id} className="mx-auto flex-none relative">
               {/* Render movie details for each movie in the 'movies' array */}
               <Link
-                  href={`/movie/${movie.id}`}
-                  title={`More information about ${movie.title}`}
-                >
-                  <div className="sm:w-[250px] h-[370px] w-[100%] ">
-                    <img
-                      src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
-                      alt={movie.title}
-                      className="w-[100%] h-[100%] object-cover "
-                      onLoad={() => setIsLoading(false)}
-                    />
+                href={`/movie/${movie.id}`}
+                title={`More information about ${movie.title}`}
+              >
+                <div className="sm:w-[250px] h-[370px] w-[100%] ">
+                  <img
+                    src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                    alt={movie.title}
+                    className="w-[100%] h-[100%] object-cover "
+                    onLoad={() => setIsLoading(false)}
+                  />
+                </div>
+                <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
+                  {movie.release_date}
+                </h2>
+                <h2 className="text-[#4f70b7] text-sm my-3">{movie.title}</h2>
+                <div className="flex justify-between items-center sm:w-[250px] w-[100%]">
+                  <div className="flex gap-2 items-center">
+                    <Image src={imdb} alt="" width={35} height={17} />
+                    <h2 className="text-[#9CA3AF] text-[12px]">
+                      {movie.vote_average}/100
+                    </h2>
                   </div>
-                  <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
-                    {movie.release_date}
-                  </h2>
-                  <h2 className="text-[#4f70b7] text-sm my-3">{movie.title}</h2>
-                  <div className="flex justify-between items-center sm:w-[250px] w-[100%]">
-                    <div className="flex gap-2 items-center">
-                      <Image src={imdb} alt="" width={35} height={17} />
-                      <h2 className="text-[#9CA3AF] text-[12px]">
-                        {movie.vote_average}/100
-                      </h2>
-                    </div>
-                    <div className="flex gap-2">
-                      <Image src={tom} alt="" width={16} height={17} />
-                      <h2 className="text-[#9CA3AF] text-[12px]">
-                  20%
-                      </h2>
-                    </div>
+                  <div className="flex gap-2">
+                    <Image src={tom} alt="" width={16} height={17} />
+                    <h2 className="text-[#9CA3AF] text-[12px]">20%</h2>
                   </div>
-                  <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
-                    {getGenreNames(movie.genre_ids).join(", ")}
-                  </h2>
-                </Link>
+                </div>
+                <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
+                  {getGenreNames(movie.genre_ids).join(", ")}
+                </h2>
+              </Link>
+              <button onClick={toggleToast}>Toggle Toast</button>
             </div>
           ))}
 
