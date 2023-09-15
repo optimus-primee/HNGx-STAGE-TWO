@@ -61,6 +61,7 @@ const Slider:React.FC=() =>{
 
   return (
     <div className="">
+      <Navbar/>
       {movies.map((movie: IMovie, index: number) => {
         return (
           <div className="z-1 w-[100%] sm:h-[100%] h-[100%] overflow-hidden" key={index}>
