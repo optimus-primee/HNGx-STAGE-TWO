@@ -146,7 +146,7 @@ const FeaturedMovies = () => {
       <div className="sm:hidden flex pt-3 mx-4 w-[100%]"></div>
       {isLoading && <Loading />}
        
-        <h2 className="sm:text-[36px] text-[28px] font-bold my-8">
+        <h2 className="sm:text-[36px] sm:px-24 px-4 text-[28px] font-bold my-8">
           Featured Movie
         </h2>
       <div className="">
