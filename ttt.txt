@@ -696,3 +696,14 @@ const page = () => {
 };
 
 export default page;
+
+
+   <Image
+                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                width={700}
+                height={700}
+                className="sm:w-[300px] w-[100%] object-cover"
+                alt="movie poster"
+                onLoadingComplete={() => setIsImgLoading(false)}
+                priority
+              />

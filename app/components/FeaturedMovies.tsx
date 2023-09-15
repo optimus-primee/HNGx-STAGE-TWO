@@ -109,6 +109,7 @@ function FeaturedMovies() {
                       src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
                       alt={movie.title}
                       className="w-[100%] h-[100%] object-cover "
+                      onLoad={() => setIsLoading(false)}
                     />
                   </div>
                   <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">

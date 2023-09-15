@@ -14,6 +14,7 @@ const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 const Page = () => {
   interface IMovie {
     poster_path: string;
+    backdrop_path: string;
     title: string;
     genres: [
       {
@@ -89,23 +90,24 @@ const Page = () => {
   // ...
 
   return (
-    <div className="bg-secondary relative px-4 md:px-0">
+    <div className="">
       {isLoading && <Loading />}
 
       <div className="">
-        <div className="relative px-24 pt-32 grid gap-4 grid-cols-4 w-[100%]">
+        <div className="relative sm:px-24 px-4 pt-32 grid gap-4 sm:grid-cols-4 w-[100%]">
           {movies.map((movie) => (
             <div key={movie.id} className="mx-auto flex-none relative">
               {/* Render movie details for each movie in the 'movies' array */}
-              <Image
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                width={700}
-                height={700}
-                className="w-[300px] object-cover"
-                alt="movie poster"
-                onLoadingComplete={() => setIsImgLoading(false)}
-                priority
-              />
+           
+               <div className="sm:w-[250px] h-[370px] w-[100%] ">
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                      alt={movie.title}
+                      className="w-[100%] h-[100%] object-cover "
+                      onLoad={() => setIsLoading(false)}
+           
+                    />
+                  </div>
               {isImgLoading && <Loading />}
             </div>
           ))}
