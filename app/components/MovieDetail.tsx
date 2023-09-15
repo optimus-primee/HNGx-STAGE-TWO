@@ -62,34 +62,34 @@ function MovieDetail({ movie }: { movie: IMovie }) {
       <div className="col-span-1">
         <Sidebar />
       </div>
-      <div className="col-span-5 pt-3 sm:pr-6 px-4">
-        <div className=" w-[100%] h-[370px]">
+      <div className="col-span-5 sm:pt-3 pt-5 sm:pr-6 px-4 smm:px-0">
+        <div className=" w-[100%] sm:h-[370px] h-[200px]">
           <img
             src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
             alt={movie.title}
             className="w-[100%] h-[100%] object-cover rounded-[20px] "
           />
         </div>
-        <div className="grid grid-cols-6 ">
+        <div className="grid sm:grid-cols-6 ">
           <div className="col-span-4 mt-3">
-            <div className="flex gap-3">
-              <h5>{movie.title}</h5> •
+            <div className="flex sm:flex-row flex-col gap-3">
+              <h5>{movie.title}</h5> <span className="hidden sm:flex">•</span>
               <p data-testid="movie-release-date" className="release">
                 {`${formatDateToUTC(movie.release_date)} (UTC)`}
               </p>
-              •
+              <span className="hidden sm:flex">•</span>
               <p data-testid="movie-runtime" className="release">
                 Runtime: {movie.runtime} minutes
               </p>
             </div>
-            <p className="text-[15px] my-2">{movie.overview}</p>
+            <p className="text-[15px] my-2 ">{movie.overview}</p>
             <div>
               <h5 className="my-1 ">Director : <span className="text-[#BE123C]">Joseph Kosinski</span></h5>
               <h5 className="my-1 ]">Director : <span className="text-[#BE123C]">Jim Cash, Jack Epps Jr,  Peter Craig</span></h5>
-              <h5 className="my-1">Director : <span className="text-[#BE123C]">Tom Cruise, Jennifer Connelly, Miles Telle</span></h5>
+              <h5 className="my-1">Director : <span className="text-[#BE123C]">Tom Cruise, Jennifer Connelly</span></h5>
     
             </div>
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 sm:flex-row flex-col sm:items-center mb-3">
               <Button
                 type="button"
                 variant="primary"
