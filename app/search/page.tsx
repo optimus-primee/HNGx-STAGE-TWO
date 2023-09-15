@@ -110,6 +110,7 @@ const Page = () => {
                     alt={movie.title}
                     className="w-[100%] h-[100%] object-cover "
                     onLoad={() => setIsLoading(false)} // Update isImgLoading here
+                    data-testid="movie-poster"
                   />
                 </div>
                 <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3" data-testid="movie-release-date">
