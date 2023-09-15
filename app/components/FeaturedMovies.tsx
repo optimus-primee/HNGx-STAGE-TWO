@@ -101,7 +101,7 @@ const FeaturedMovies = () => {
   // Function to toggle between success and error toast
   const toggleToast = () => {
     if (notificationType === "success") {
-      toast.success("🦄 Wow so easy!", {
+      toast.success("E be like you like that film", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -112,7 +112,7 @@ const FeaturedMovies = () => {
         theme: "dark",
       });
     } else {
-      toast.error("❌ Something went wrong!", {
+      toast.error("Omoo,e be like you no like that film ooo", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -142,9 +142,13 @@ const FeaturedMovies = () => {
 
   return (
     <div className="">
+      
       <div className="sm:hidden flex pt-3 mx-4 w-[100%]"></div>
       {isLoading && <Loading />}
-
+       
+        <h2 className="sm:text-[36px] text-[28px] font-bold my-8">
+          Featured Movie
+        </h2>
       <div className="">
         <div className="relative sm:px-24 px-4 pt-32 grid gap-4 sm:grid-cols-4 w-[100%]">
           {movies.slice(0, 10).map((movie) => (
