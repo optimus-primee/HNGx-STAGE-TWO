@@ -126,7 +126,7 @@ function MovieDetail({ movie }: { movie: IMovie }) {
               </div>
             </div>
           </div>
-          <div className="sm:col-span-2 hidden sm:px-8 ">
+          <div className="sm:col-span-2 sm:grid hidden sm:px-8 ">
             <div className="flex flex-col sm:gap-3 mt-3">
               <Button
                 type="button"

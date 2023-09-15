@@ -64,7 +64,7 @@ const Slider:React.FC=() =>{
       {movies.map((movie: IMovie, index: number) => {
         return (
           <div className="z-1 w-[100%] sm:h-[100%] h-[100%] overflow-hidden" key={index}>
-            <Navbar/>
+           
             {index === current && (
               <div className="bg-gradient-to-b from-black via-transparent to-transparent absolute top-0 left-0 w-[100%] sm:h-[100vh] h-[100vh] ">
                  <img

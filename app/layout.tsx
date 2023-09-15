@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 
 import Bottom from "./components/bottom";
+import Navbar from "./components/Navbar";
 
 
 
@@ -22,8 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={dm_sans.className}>
-    
+      <Navbar/>
         {children}
+     
 <Bottom/>
       </body>
     </html>

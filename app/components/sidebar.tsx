@@ -36,7 +36,7 @@ const Sidebar: React.FC = () => {
     },
   ];
   const links = items.map((item) => (
-    <button onClick={() => router.push(item.url)} className="flex gap-4 items-center ">
+    <button onClick={() => router.push(item.url)} className="flex gap-3 items-center ">
             
       <item.icon width={30} height={30} />
       <h5>{item.text}</h5>
@@ -44,7 +44,7 @@ const Sidebar: React.FC = () => {
     </button>
   ));
   return (
-    <div className="flex-col justify-between h-[100vh] p-5 sm:flex hidden border border-[#BE123C] px-5 rounded-r-[45px]">
+    <div className="flex-col justify-between h-[100vh]  sm:flex hidden border border-[#BE123C] p-5 rounded-r-[45px]">
          <div>
          <Link href="/" >
           <div className="flex gap-6 items-center">
