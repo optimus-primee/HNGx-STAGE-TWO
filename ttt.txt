@@ -1,0 +1,862 @@
+{movies.map((movie: IMovie, key: number) => {
+        return (
+          <div key={key}>
+          
+          <Link href={`/movie/${movie.id}`} title={`More information about ${movie.title}`}>
+          <Image
+              src={`https://image.tmdb.org/t/p/w500/${movie?.poster_path}`}
+              width={250}
+                height={370} 
+              alt="movie poster"
+              onLoadingComplete={() => setIsImgLoading(false)}
+              priority
+            />
+            {isImgLoading && <Loading />}
+            <h5 className="text-white">{movie.title}</h5>
+            <h5 className="text-white">{movie.release_date}</h5>
+          </Link>
+          </div>
+            
+        );
+      })}
+
+
+
+
+      "use client";
+import React, { useEffect, useState } from "react";
+
+import Image from "next/image";
+import Loading from "./Loading";
+import axios from "axios";
+import Genres from "./Genres";
+import Link from "next/link"
+function FeaturedMovies() {
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isImgLoading, setIsImgLoading] = useState(false);
+
+  interface IMovie {
+    poster_path: string;
+    id: string;
+    
+    title: string;
+    vote_average: number;
+    release_date: string;
+    genre_ids: [
+      {
+        name: string;
+        id: string;
+      }
+    ];
+  }
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=ca0825715c06ebe0d0621ba9ead36000&language=en-US&page=1`,
+
+        {}
+      )
+
+      .then((res) => {
+        setMovies(res.data.results.slice(1, 11));
+
+        console.log(res.data.results.slice(1, 11));
+ 
+      });
+  }, []);
+  return (
+
+    <div className="grid grid-cols-4 px-24 overflow-x-hidden ">
+         {isLoading && <Loading />}
+      
+  </div>
+  )
+}
+
+export default FeaturedMovies;
+
+
+
+
+
+
+
+"use client";
+
+import axios from "axios";
+import { useEffect,useState } from "react";
+
+import { useParams } from "next/navigation";
+
+
+const page = () => {
+  const path = useParams();
+  const { imdb_id }: any = path;
+  const [movies, setMovies] = useState<IMovie[] | null>(null);
+  
+
+  interface IMovie {
+    poster_path: string;
+    id: string;
+    imdb_id: string;
+    title: string;
+    vote_average: number;
+    release_date: string;
+    genre_ids: [
+      {
+        name: string;
+        id: string;
+      }
+    ];
+  }
+  const fetchDesign = async () => {
+    try {
+      const response = await axios.get(`https://api.themoviedb.org/3/movie/api_key=ca0825715c06ebe0d0621ba9ead36000&language=en-US&page=1`);
+      console.log(response);
+      setMovies(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchDesign();
+  }, []);
+  return (
+    <div className="pt-[100px] pb-[100px] flex justify-center items-center">
+     
+     
+    </div>
+  );
+};
+
+export default page;
+
+
+//Slider
+(
+  import React, { useEffect, useRef, useState } from "react";
+import { Sliderdata } from "../data/SliderData";
+import Image from "next/image";
+import axios from "axios";
+import Loading from "../components/Loading"
+import {Button} from "../components/buttons/button"
+import play from "../assests/images/Play.svg"
+function Slider() {
+  const [current, setCurrent] = useState(0);
+  const length = Sliderdata.length;
+  const timeout = useRef<null | NodeJS.Timeout>(null);
+  useEffect(() => {
+    const nextSlide = () => {
+      setCurrent(current === length - 1 ? 0 : current + 1);
+    };
+    timeout.current = setTimeout(nextSlide, 3000);
+    return function () {
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
+    };
+  }, [current, length]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isImgLoading, setIsImgLoading] = useState(false);
+
+  const [movies, setMovies] = useState([]);
+
+  interface IMovie {
+    backdrop_path: string;
+    title: string;
+    overview: string;
+    release_date: string;
+  
+  }
+  useEffect(() => {
+    setIsLoading(true);
+    setIsImgLoading(true);
+   axios
+      .get(
+        `https://api.themoviedb.org/3/movie/popular?api_key=ca0825715c06ebe0d0621ba9ead36000&language=en-US&page=1`,
+        {}
+      )
+
+      .then((res) => {
+        setMovies(res.data.results.slice(1, 8));
+        setIsLoading(false);
+        console.log(res.data.results.slice(1, 8));
+      });
+  }, []);
+  return (
+
+    <div className="">
+         
+      {movies.map((movie: IMovie, index: number) => {
+        return (
+          <div className="z-1 w-[100%] h-[80%] overflow-hidden" key={index}>
+            {index === current && (
+              <div className="bg absolute top-0 left-0  w-[100%] h-[80vh] ">
+                <Image
+                  src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                  alt=""
+                  layout="fill" // This will make the Image fill its parent
+                  objectFit="cover" // This will make the Image cover the entire parent
+                
+                  onLoadingComplete={() => setIsImgLoading(false)}
+                  priority
+                />
+                {isImgLoading && <Loading />}
+            
+
+                <div className="absolute top-[30%] text-white z-10 px-24 ">
+                  <h1 className="capitalize text-[48px] w-[400px] h-[60px] overflow-hidden">
+                  
+                    {movie.title}
+                  </h1>
+                  <p className="w-[300px] h-[80px] overflow-hidden   text-sm my-4">{movie.overview}</p>
+                  <Button type="button" variant="primary"  imgSrc={play} imgAlt="play">
+                Get Started
+              </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export default Slider;
+)
+
+
+
+
+
+serch(
+  "use client";
+import React, { useEffect, useState } from "react";
+import Loading from "../components/Loading";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+
+
+
+import dynamic from "next/dynamic";
+
+const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
+
+const page = () => {
+  
+
+  const [input, setInput] = useState("");
+  const router = useRouter();
+
+
+  interface IMovie {
+    poster_path: string;
+    title: string;
+    release_date: string;
+   
+  }
+
+  const searchParams = useSearchParams();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isImgLoading, setIsImgLoading] = useState(false);
+
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setIsImgLoading(true);
+
+    let searchMovie = searchParams.get("movie");
+
+    if (searchMovie === null) {
+      searchMovie = "avengers";
+    }
+
+    axios
+      .get(`https://api.themoviedb.org/3/search/movie`, {
+        params: {
+          api_key: "ca0825715c06ebe0d0621ba9ead36000",
+          query: searchMovie,
+        },
+      })
+      .then((res) => {
+        setMovies(res.data.results);
+        setIsLoading(false);
+        console.log(res.data.results);
+      });
+  }, []);
+
+  return (
+    <div className="relative px-24 pt-32 grid grid-cols-4 w-[100%] bg-black">
+      
+      {isLoading && <Loading />}
+      {movies.map((movie: IMovie, key: number) => {
+        return (
+          <div key={key}>
+          
+            <Image
+              src={`https://image.tmdb.org/t/p/w500/${movie?.poster_path}`}
+              width={250}
+                height={370} 
+              alt="No movie poster"
+              onLoadingComplete={() => setIsImgLoading(false)}
+              priority
+            />
+            {isImgLoading && <Loading />}
+            <h5 className="text-white">{movie.title}</h5>
+            <h5 className="text-white">{movie.release_date}</h5>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default page;
+
+)
+
+poppulr(
+  "use client"
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Loading from "./Loading";
+import Link from "next/link";
+function FeaturedMovies() {
+  const [movies, setMovies] = useState<IMovie[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  interface IMovie {
+    poster_path: string;
+    id: string;
+    imdb_id: string;
+    title: string;
+    vote_average: number;
+    release_date: string;
+    genre_ids: [
+      {
+        name: string;
+        id: string;
+      }
+    ];
+  }
+
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=ca0825715c06ebe0d0621ba9ead36000&language=en-US&page=1`
+      )
+      .then(async (res) => {
+        // Fetch IMDb ID for each movie
+        const moviesWithImdbId = await Promise.all(
+          res.data.results.map(async (movie: IMovie) => {
+            const imdbResponse = await axios.get(
+              `https://api.themoviedb.org/3/movie/${movie.id}?api_key=ca0825715c06ebe0d0621ba9ead36000`
+            );
+            movie.imdb_id = imdbResponse.data.imdb_id || null;
+            return movie;
+          })
+        );
+
+        setMovies(moviesWithImdbId);
+        setIsLoading(false);
+      });
+  }, []);
+
+  return (
+    <div className="grid grid-cols-4 px-24 overflow-x-hidden">
+      {isLoading ? (
+        <Loading />
+      ) : (
+        movies &&
+        movies.map((movie: IMovie) => (
+          <div key={movie.id}>
+           <Link href={`/movie/${movie.imdb_id}`} title={`More information about ${movie.title}`}>
+           <img
+              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+              alt={movie.title}
+            />
+            <h2>{movie.title}</h2>
+            
+       
+            </Link>
+           
+          </div>
+        ))
+      )}
+    </div>
+  );
+}
+
+export default FeaturedMovies;
+
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"use client";
+import React, { useEffect, useState } from "react";
+import Loading from "../components/Loading";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+
+
+
+
+import dynamic from "next/dynamic";
+
+const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
+
+const page = () => {
+  
+
+  const [input, setInput] = useState("");
+  const router = useRouter();
+
+
+  interface IMovie {
+    poster_path: string;
+    title: string;
+    release_date: string;
+    backdrop_path: string;
+   
+  }
+
+  const searchParams = useSearchParams();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isImgLoading, setIsImgLoading] = useState(false);
+
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setIsImgLoading(true);
+
+    let searchMovie = searchParams.get("movie");
+
+    if (searchMovie === null) {
+      searchMovie = "avengers";
+    }
+
+    axios
+      .get(`https://api.themoviedb.org/3/search/movie`, {
+        params: {
+          api_key: "ca0825715c06ebe0d0621ba9ead36000",
+          query: searchMovie,
+        },
+      })
+      .then((res) => {
+        setMovies(res.data.results);
+        setIsLoading(false);
+        console.log(res.data.results);
+      });
+  }, []);
+
+  return (
+    <div className="relative sm:px-24 px-6 pt-32 grid sm:grid-cols-4 w-[100%] bg-black">
+      
+      {isLoading && <Loading />}
+      {movies.map((movie: IMovie, key: number) => {
+        return (
+          <div key={key}>
+            
+           <div className="sm:w-[250px] h-[370px] w-[100%] ">
+           <img
+                  src={`https://image.tmdb.org/t/p/original${
+            movie?.backdrop_path || movie?.poster_path
+          }`}
+                  alt={movie.title}
+                  className="w-[100%] h-[100%] object-cover "
+                  onLoad={() => setIsImgLoading(false)}
+        
+               
+
+                />
+            </div>
+            {isImgLoading && <Loading />}
+            <h5 className="text-white">{movie.title}</h5>
+            <h5 className="text-white">{movie.release_date}</h5>
+            
+          </div>
+            
+        );
+      })}
+    </div>
+  );
+};
+
+export default page;
+
+
+
+
+
+
+<div
+        className="banner-single"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(https://image.tmdb.org/t/p/w1280/${movie.backdrop_path})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          minHeight: "60vh",
+          backgroundColor: "#000",
+        }}
+        key={movie.id}
+      >
+  
+        <div className="movie-inner" style={{ zIndex: 20 }}>
+          <Link href="#" className="banner-btn">
+            <AiFillPlayCircle className="icon" />
+            <p>Watch Trailer</p>
+          </Link>
+        </div>
+      </div>
+      <div className="movie-details">
+        <h2 data-testid="movie-title">{movie.title}</h2>
+        <p data-testid="movie-release-date" className="release">
+          {`Release Date (UTC): ${formatDateToUTC(movie.release_date)} `}
+        </p>
+        <p data-testid="movie-runtime" className="release">
+          Runtime: {movie.runtime} minutes
+        </p>
+        <p data-testid="movie-overview">{movie.overview}</p>
+      </div>
+
+
+
+      <div className="flex flex-col  sm:gap-3 mt-3">
+              <Button
+                type="button"
+                variant="primary"
+                paddingLess={true}
+                className="px-5 py-3"
+              >
+                See Showtimes
+              </Button>
+              <Button
+                type="button"
+                variant="primary"
+                paddingLess={true}
+                className="px-5 py-3"
+              >
+                More watch options
+              </Button>
+          
+       
+            </div>
+
+
+
+
+
+
+            "use client";
+import React, { useEffect, useState } from "react";
+import Loading from "../components/Loading";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+
+
+
+import dynamic from "next/dynamic";
+
+const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
+
+const page = () => {
+  
+
+  const [input, setInput] = useState("");
+  const router = useRouter();
+
+
+  interface IMovie {
+    poster_path: string;
+    title: string;
+    release_date: string;
+   
+  }
+
+  const searchParams = useSearchParams();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isImgLoading, setIsImgLoading] = useState(false);
+
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setIsImgLoading(true);
+
+    let searchMovie = searchParams.get("movie");
+
+    if (searchMovie === null) {
+      searchMovie = "avengers";
+    }
+
+    axios
+      .get(`https://api.themoviedb.org/3/search/movie`, {
+        params: {
+          api_key: "ca0825715c06ebe0d0621ba9ead36000",
+          query: searchMovie,
+        },
+      })
+      .then((res) => {
+        setMovies(res.data.results);
+        setIsLoading(false);
+        console.log(res.data.results);
+      });
+  }, []);
+
+  return (
+    <div className="relative px-24 pt-32 grid grid-cols-4 w-[100%] bg-black">
+      
+      {isLoading && <Loading />}
+      {movies.map((movie: IMovie, key: number) => {
+        return (
+          <div key={key}>
+          
+            <Image
+              src={`https://image.tmdb.org/t/p/w500/${movie?.poster_path}`}
+              width={250}
+                height={370} 
+              alt="No movie poster"
+              onLoadingComplete={() => setIsImgLoading(false)}
+              priority
+            />
+            {isImgLoading && <Loading />}
+            <h5 className="text-white">{movie.title}</h5>
+            <h5 className="text-white">{movie.release_date}</h5>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default page;
+
+
+   <Image
+                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                width={700}
+                height={700}
+                className="sm:w-[300px] w-[100%] object-cover"
+                alt="movie poster"
+                onLoadingComplete={() => setIsImgLoading(false)}
+                priority
+              />
+
+
+
+
+
+
+
+              "use client";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Loading from "./Loading";
+import Link from "next/link";
+import imdb from "../assests/images/imdb.png";
+import Image from "next/image";
+import tom from "../assests/images/tom.png";
+import Bottom from "./bottom";
+
+function FeaturedMovies() {
+  const [movies, setMovies] = useState<IMovie[] | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  interface IMovie {
+    poster_path: string;
+    id: string;
+    imdb_id: string | null;
+    title: string;
+    vote_average: string;
+    release_date: string;
+    genre_ids: number[]; // Change genre_ids to be an array of numbers
+    backdrop_path: string;
+    randomPercentage: number;
+  }
+  const genreMap: { [key: number]: string } = {
+    28: "Action",
+    12: "Adventure",
+    16: "Animation",
+    35: "Comedy",
+    80: "Crime",
+    99: "Documentary",
+    18: "Drama",
+    10751: "Family",
+    14: "Fantasy",
+    36: "History",
+    27: "Horror",
+    10402: "Music",
+    9648: "Mystery",
+    10749: "Romance",
+    878: "Science Fiction",
+    10770: "TV Movie",
+    53: "Thriller",
+    10752: "War",
+    37: "Western",
+  };
+
+  // Function to get the genre names for a movie
+  const getGenreNames = (genreIds: number[]): string[] => {
+    return genreIds.map((genreId) => genreMap[genreId]);
+  };
+  // Function to generate a random percentage between min and max
+  const getRandomPercentage = (min: number, max: number): number => {
+    return Math.random() * (max - min) + min;
+  };
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/top_rated?api_key=ca0825715c06ebe0d0621ba9ead36000&language=en-US&page=1`
+        );
+
+        const moviesWithImdbId = await Promise.all(
+          response.data.results.map(async (movie: IMovie) => {
+            const imdbResponse = await axios.get(
+              `https://api.themoviedb.org/3/movie/${movie.id}?api_key=ca0825715c06ebe0d0621ba9ead36000`
+            );
+            movie.id = imdbResponse.data.id || null;
+            movie.randomPercentage = getRandomPercentage(0, 100); // Generate a random percentage
+            return movie;
+          })
+        );
+
+        setMovies(moviesWithImdbId);
+       console.log(moviesWithImdbId);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching movies:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchMovies();
+  }, []);
+
+  return (
+    <div className="sm:px-24 px-6">
+      <div>
+        <h2 className="sm:text-[36px] text-[28px] font-bold my-8">
+          Featured Movie
+        </h2>
+      </div>
+      <div className="grid sm:grid-cols-4 w-[100%] sm:gap-y-20 gap-y-20  overflow-x-hidden">
+        {isLoading ? (
+          <Loading />
+        ) : (
+          movies &&
+          movies.map((movie: IMovie) => (
+            <div key={movie.id}>
+              {movie.id && (
+                <Link
+                  href={`/movie/${movie.id}`}
+                  title={`More information about ${movie.title}`}
+                >
+                  <div className="sm:w-[250px] h-[370px] w-[100%] ">
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                      alt={movie.title}
+                      className="w-[100%] h-[100%] object-cover "
+                      onLoad={() => setIsLoading(false)}
+                    />
+                  </div>
+                  <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
+                    {movie.release_date}
+                  </h2>
+                  <h2 className="text-[#4f70b7] text-sm my-3">{movie.title}</h2>
+                  <div className="flex justify-between items-center sm:w-[250px] w-[100%]">
+                    <div className="flex gap-2 items-center">
+                      <Image src={imdb} alt="" width={35} height={17} />
+                      <h2 className="text-[#9CA3AF] text-[12px]">
+                        {movie.vote_average}/100
+                      </h2>
+                    </div>
+                    <div className="flex gap-2">
+                      <Image src={tom} alt="" width={16} height={17} />
+                      <h2 className="text-[#9CA3AF] text-[12px]">
+                        {movie.randomPercentage.toFixed(1)}%
+                      </h2>
+                    </div>
+                  </div>
+                  <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
+                    {getGenreNames(movie.genre_ids).join(", ")}
+                  </h2>
+                </Link>
+              )}
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default FeaturedMovies;
