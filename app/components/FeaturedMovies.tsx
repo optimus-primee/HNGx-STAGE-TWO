@@ -12,6 +12,7 @@ function FeaturedMovies() {
   const [movies, setMovies] = useState<IMovie[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+
   interface IMovie {
     poster_path: string;
     id: string;
@@ -73,6 +74,7 @@ function FeaturedMovies() {
         );
 
         setMovies(moviesWithImdbId);
+       console.log(moviesWithImdbId);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching movies:", error);
