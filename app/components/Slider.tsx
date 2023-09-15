@@ -47,9 +47,9 @@ const Slider:React.FC=() =>{
         const response = await axios.get(
           `https://api.themoviedb.org/3/movie/popular?api_key=ca0825715c06ebe0d0621ba9ead36000&language=en-US&page=1`
         );
-        setMovies(response.data.results.slice(1, 8));
+        setMovies(response.data.results.slice(0, 8));
         setIsLoading(false);
-        console.log(response.data.results.slice(1, 8));
+        console.log(response.data.results.slice(0, 8));
       } catch (error) {
         console.error("Error fetching movies:", error);
         setIsLoading(false);

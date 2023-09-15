@@ -8,7 +8,7 @@ import imdb from "../assests/images/imdb.png";
 import Image from "next/image";
 import tom from "../assests/images/tom.png";
 import { toast } from "react-toastify";
-
+import { FaRegHeart,FaHeart} from "react-icons/fa";
 import dynamic from "next/dynamic";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
@@ -148,19 +148,36 @@ const FeaturedMovies = () => {
       <div className="">
         <div className="relative sm:px-24 px-4 pt-32 grid gap-4 sm:grid-cols-4 w-[100%]">
           {movies.slice(0, 10).map((movie) => (
-            <div key={movie.id} className="mx-auto flex-none relative">
+            <div key={movie.id} className="mx-auto flex-none relative" data-testid="movie-card">
               {/* Render movie details for each movie in the 'movies' array */}
               <Link
                 href={`/movie/${movie.id}`}
                 title={`More information about ${movie.title}`}
               >
-                <div className="sm:w-[250px] h-[370px] w-[100%] ">
+                <div className="sm:w-[250px] h-[370px] w-[100%] relative">
                   <img
                     src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
                     alt={movie.title}
                     className="w-[100%] h-[100%] object-cover "
                     onLoad={() => setIsLoading(false)}
                   />
+                  <div className="absolute right-2 top-2 cursor-pointer">
+                  <button
+                  className={`toggle-button ${
+                    notificationType === "success"
+                      ? "success-background"
+                      : "error-background"
+                  }`}
+                  onClick={toggleToast}
+                >
+                  {notificationType === "success" ? (
+                    <FaRegHeart  />
+                  ) : (
+                    < FaHeart className="text-red-500" />
+                  )}
+                 
+                </button>
+                  </div>
                 </div>
                 <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
                   {movie.release_date}
@@ -182,7 +199,7 @@ const FeaturedMovies = () => {
                   {getGenreNames(movie.genre_ids).join(", ")}
                 </h2>
               </Link>
-              <button onClick={toggleToast}>Toggle Toast</button>
+              
             </div>
           ))}
 

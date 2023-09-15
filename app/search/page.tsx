@@ -9,6 +9,7 @@ import { BsPlayFill } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import dynamic from "next/dynamic";
 import Search from "../components/Search";
+import Navbar from "../components/Navbar";
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
@@ -89,12 +90,15 @@ const Page = () => {
       <div className="sm:hidden flex pt-3 mx-4 w-[100%]">
         <Search />
       </div>
+      <div className="sm:flex hidden pt-3 mx-4 w-[100%]">
+        <Navbar/>
+      </div>
       {isLoading && <Loading />}
 
       <div className="">
         <div className="relative sm:px-24 px-4 pt-32 grid gap-4 sm:grid-cols-4 w-[100%]">
           {movies.map((movie) => (
-            <div key={movie.id} className="mx-auto flex-none relative">
+            <div key={movie.id} className="mx-auto flex-none relative" data-testid="movie-card">
               {/* Render movie details for each movie in the 'movies' array */}
               <Link
                 href={`/movie/${movie.id}`}
@@ -102,12 +106,16 @@ const Page = () => {
               >
                 <div className="sm:w-[250px] h-[370px] w-[100%] ">
                   <img
-                    src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                    src={`https://image.tmdb.org/t/p/original${ movie.backdrop_path || movie.poster_path}`}
                     alt={movie.title}
                     className="w-[100%] h-[100%] object-cover "
                     onLoad={() => setIsLoading(false)} // Update isImgLoading here
                   />
                 </div>
+                <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3" data-testid="movie-release-date">
+                  {movie.release_date}
+                </h2>
+                <h2 className="text-[#4f70b7] text-sm my-3" data-testid="movie-title">{movie.title}</h2>
               </Link>
             </div>
           ))}
