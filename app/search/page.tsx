@@ -1,7 +1,6 @@
-"use client"
 import React, { useEffect, useState } from "react";
 import Loading from "../components/Loading";
-import Image from "next/image";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 
@@ -30,22 +29,18 @@ const Page = () => {
     overview: string;
     videos: { results: [{ type: string; key: string }] };
     id: string;
-
   }
 
   const searchParams = useSearchParams();
 
-
   const [movies, setMovies] = useState<IMovie[]>([]); // Use an array to store multiple movies
   const [isLoading, setIsLoading] = useState(false);
-  const [isImgLoading, setIsImgLoading] = useState(false);
   const [showPlayer, setShowPlayer] = useState(false);
   const [trailer, setTrailer] = useState("");
   const [movie, setMovie] = useState<IMovie>();
 
   useEffect(() => {
     setIsLoading(true);
-    setIsImgLoading(true);
 
     let searchMovie = searchParams.get("movie");
 
@@ -88,13 +83,11 @@ const Page = () => {
       });
   };
 
-  // ...
-
   return (
     <div className="">
-     <div className="sm:hidden flex pt-3 mx-4 w-[100%]">
-     <Search/>
-     </div>
+      <div className="sm:hidden flex pt-3 mx-4 w-[100%]">
+        <Search />
+      </div>
       {isLoading && <Loading />}
 
       <div className="">
@@ -102,17 +95,19 @@ const Page = () => {
           {movies.map((movie) => (
             <div key={movie.id} className="mx-auto flex-none relative">
               {/* Render movie details for each movie in the 'movies' array */}
-           
-               <div className="sm:w-[250px] h-[370px] w-[100%] ">
-                    <img
-                      src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
-                      alt={movie.title}
-                      className="w-[100%] h-[100%] object-cover "
-                      onLoad={() => setIsLoading(false)}
-           
-                    />
-                  </div>
-              {isImgLoading && <Loading />}
+              <Link
+                href={`/movie/${movie.id}`}
+                title={`More information about ${movie.title}`}
+              >
+                <div className="sm:w-[250px] h-[370px] w-[100%] ">
+                  <img
+                    src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                    alt={movie.title}
+                    className="w-[100%] h-[100%] object-cover "
+                    onLoad={() => setIsLoading(false)} // Update isImgLoading here
+                  />
+                </div>
+              </Link>
             </div>
           ))}
 
