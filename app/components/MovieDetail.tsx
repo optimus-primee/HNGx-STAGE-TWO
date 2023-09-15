@@ -58,11 +58,11 @@ function MovieDetail({ movie }: { movie: IMovie }) {
   };
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="grid sm:grid-cols-6  sm:gap-5">
+    <div className="grid sm:grid-cols-6 sm:gap-5">
       <div className="col-span-1">
         <Sidebar />
       </div>
-      <div className="col-span-5 sm:pt-3 pt-5 sm:pr-6 px-4 smm:px-0">
+      <div className="col-span-5 sm:pt-3 pt-5 sm:pr-6 px-4 sm:px-0">
         <div className=" w-[100%] sm:h-[370px] h-[200px]">
           <img
             src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
@@ -100,10 +100,10 @@ function MovieDetail({ movie }: { movie: IMovie }) {
               </Button>
               <div className="relative cursor-pointer   ">
                 <div
-                  className="flex items-center gap-3   "
+                  className="flex justify-center items-center gap-3   "
                   onClick={() => setIsOpen((prev) => !prev)}
                 >
-                  <h6>Awards 9 nominations</h6>
+                  <h6 className="">Awards 9 nominations</h6>
                   {!isOpen ? (
                     <PiIcons.PiCaretDownBold />
                   ) : (
@@ -126,8 +126,8 @@ function MovieDetail({ movie }: { movie: IMovie }) {
               </div>
             </div>
           </div>
-          <div className="col-span-2 px-8">
-            <div className="flex flex-col gap-3 mt-3">
+          <div className="sm:col-span-2 hidden sm:px-8 ">
+            <div className="flex flex-col sm:gap-3 mt-3">
               <Button
                 type="button"
                 variant="primary"
@@ -144,9 +144,12 @@ function MovieDetail({ movie }: { movie: IMovie }) {
               >
                 More watch options
               </Button>
+          
+       
             </div>
+            
           </div>
-          <div></div>
+         
         </div>
       </div>
     </div>
