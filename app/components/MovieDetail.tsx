@@ -69,6 +69,7 @@ function MovieDetail({ movie }: { movie: IMovie }) {
             src={`https://image.tmdb.org/t/p/original${movie.backdrop_path || movie.poster_path}`}
             alt={movie.title}
             className="w-[100%] h-[100%] object-cover rounded-[20px] "
+            data-testid="movie-poster"
           />
         </div>
         <div className="grid sm:grid-cols-6 ">
@@ -80,8 +81,8 @@ function MovieDetail({ movie }: { movie: IMovie }) {
                 {`${formatDateToUTC(movie.release_date)} (UTC)`}
               </p>
               <span className="hidden sm:flex">•</span>
-              <p data-testid="movie-runtime" className="release">
-                Runtime: {movie.runtime} minutes
+              <p data-testid="movie-runtime">
+                 {movie.runtime} 
               </p>
             </div>
             <p className="text-[15px] my-2 " data-testid="movie-overview">{movie.overview}</p>
