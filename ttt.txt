@@ -706,7 +706,6 @@ export default page;
                 alt="movie poster"
                 onLoadingComplete={() => setIsImgLoading(false)}
                 priority
-<<<<<<< HEAD
               />
 
 
@@ -861,6 +860,4 @@ function FeaturedMovies() {
 }
 
 export default FeaturedMovies;
-=======
               />
->>>>>>> 03d920066312063d20ca3247513f1a00b3739590

@@ -4,11 +4,12 @@ import Loading from "../components/Loading";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import imdb from "../assests/images/imdb.png";
+import Image from "next/image";
+import tom from "../assests/images/tom.png";
 
-import { BsPlayFill } from "react-icons/bs";
-import { IoMdClose } from "react-icons/io";
 import dynamic from "next/dynamic";
-import Search from "../components/Search";
+
 
 const ReactPlayer = dynamic(() => import("react-player/lazy"), { ssr: false });
 
@@ -17,12 +18,7 @@ const FeaturedMovies = () => {
     poster_path: string;
     backdrop_path: string;
     title: string;
-    genres: [
-      {
-        name: string;
-        id: string;
-      }
-    ];
+    genre_ids: number[]; 
     original_language: string;
     release_date: string;
     runtime: string;
@@ -30,7 +26,39 @@ const FeaturedMovies = () => {
     overview: string;
     videos: { results: [{ type: string; key: string }] };
     id: string;
+    randomPercentage: number;
   }
+  const genreMap: { [key: number]: string } = {
+    28: "Action",
+    12: "Adventure",
+    16: "Animation",
+    35: "Comedy",
+    80: "Crime",
+    99: "Documentary",
+    18: "Drama",
+    10751: "Family",
+    14: "Fantasy",
+    36: "History",
+    27: "Horror",
+    10402: "Music",
+    9648: "Mystery",
+    10749: "Romance",
+    878: "Science Fiction",
+    10770: "TV Movie",
+    53: "Thriller",
+    10752: "War",
+    37: "Western",
+  };
+
+  
+  // Function to get the genre names for a movie
+  const getGenreNames = (genreIds: number[]): string[] => {
+    return genreIds.map((genreId) => genreMap[genreId]);
+  };
+  // Function to generate a random percentage between min and max
+  const getRandomPercentage = (min: number, max: number): number => {
+    return Math.random() * (max - min) + min;
+  };
 
 
   const [movies, setMovies] = useState<IMovie[]>([]); // Use an array to store multiple movies
@@ -67,9 +95,12 @@ const FeaturedMovies = () => {
         `https://api.themoviedb.org/3/movie/${movieId}?api_key=ca0825715c06ebe0d0621ba9ead36000&append_to_response=videos`
       )
       .then((res) => {
+      
+        
         setMovie(res.data);
         setIsLoading(false);
         console.log(res.data);
+        
       });
   };
 
@@ -86,18 +117,39 @@ const FeaturedMovies = () => {
             <div key={movie.id} className="mx-auto flex-none relative">
               {/* Render movie details for each movie in the 'movies' array */}
               <Link
-                href={`/movie/${movie.id}`}
-                title={`More information about ${movie.title}`}
-              >
-                <div className="sm:w-[250px] h-[370px] w-[100%] ">
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
-                    alt={movie.title}
-                    className="w-[100%] h-[100%] object-cover "
-                    onLoad={() => setIsLoading(false)} // Update isImgLoading here
-                  />
-                </div>
-              </Link>
+                  href={`/movie/${movie.id}`}
+                  title={`More information about ${movie.title}`}
+                >
+                  <div className="sm:w-[250px] h-[370px] w-[100%] ">
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                      alt={movie.title}
+                      className="w-[100%] h-[100%] object-cover "
+                      onLoad={() => setIsLoading(false)}
+                    />
+                  </div>
+                  <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
+                    {movie.release_date}
+                  </h2>
+                  <h2 className="text-[#4f70b7] text-sm my-3">{movie.title}</h2>
+                  <div className="flex justify-between items-center sm:w-[250px] w-[100%]">
+                    <div className="flex gap-2 items-center">
+                      <Image src={imdb} alt="" width={35} height={17} />
+                      <h2 className="text-[#9CA3AF] text-[12px]">
+                        {movie.vote_average}/100
+                      </h2>
+                    </div>
+                    <div className="flex gap-2">
+                      <Image src={tom} alt="" width={16} height={17} />
+                      <h2 className="text-[#9CA3AF] text-[12px]">
+                  20
+                      </h2>
+                    </div>
+                  </div>
+                  <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
+                    {getGenreNames(movie.genre_ids).join(", ")}
+                  </h2>
+                </Link>
             </div>
           ))}
 
