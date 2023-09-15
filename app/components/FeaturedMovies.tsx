@@ -6,6 +6,7 @@ import Link from "next/link";
 import imdb from "../assests/images/imdb.png";
 import Image from "next/image";
 import tom from "../assests/images/tom.png";
+import Bottom from "./bottom";
 
 function FeaturedMovies() {
   const [movies, setMovies] = useState<IMovie[] | null>(null);
@@ -83,57 +84,59 @@ function FeaturedMovies() {
   }, []);
 
   return (
-   <div className="sm:px-24 px-6">
-    <div>
-      <h2 className="sm:text-[36px] text-[28px] font-bold my-8">Featured Movie</h2>
-    </div>
-     <div className="grid sm:grid-cols-4 w-[100%] sm:gap-y-20 gap-y-20  overflow-x-hidden">
-     
-      {isLoading ? (
-        <Loading />
-      ) : (
-        movies &&
-        movies.map((movie: IMovie) => (
-          <div key={movie.id}>
-            {movie.id && (
-              <Link
-                href={`/movie/${movie.id}`}
-                title={`More information about ${movie.title}`}
-              >
-                <div className="sm:w-[250px] h-[370px] w-[100%] ">
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
-                    alt={movie.title}
-                    className="w-[100%] h-[100%] object-cover "
-                  />
-                </div>
-                <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
-                  {movie.release_date}
-                </h2>
-                <h2 className="text-[#4f70b7] text-sm my-3">{movie.title}</h2>
-                <div className="flex justify-between items-center sm:w-[250px] w-[100%]">
-                  <div className="flex gap-2 items-center">
-                    <Image src={imdb} alt="" width={35} height={17} />
-                    <h2 className="text-[#9CA3AF] text-[12px]">
-                      {movie.vote_average}/100
-                    </h2>
+    <div className="sm:px-24 px-6">
+      <div>
+        <h2 className="sm:text-[36px] text-[28px] font-bold my-8">
+          Featured Movie
+        </h2>
+      </div>
+      <div className="grid sm:grid-cols-4 w-[100%] sm:gap-y-20 gap-y-20  overflow-x-hidden">
+        {isLoading ? (
+          <Loading />
+        ) : (
+          movies &&
+          movies.map((movie: IMovie) => (
+            <div key={movie.id}>
+              {movie.id && (
+                <Link
+                  href={`/movie/${movie.id}`}
+                  title={`More information about ${movie.title}`}
+                >
+                  <div className="sm:w-[250px] h-[370px] w-[100%] ">
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                      alt={movie.title}
+                      className="w-[100%] h-[100%] object-cover "
+                    />
                   </div>
-                  <div className="flex gap-2">
-                  <Image src={tom} alt="" width={16} height={17} />
-                    <h2 className="text-[#9CA3AF] text-[12px]">
-                      {movie.randomPercentage.toFixed(1)}%
-                    </h2>
-
+                  <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
+                    {movie.release_date}
+                  </h2>
+                  <h2 className="text-[#4f70b7] text-sm my-3">{movie.title}</h2>
+                  <div className="flex justify-between items-center sm:w-[250px] w-[100%]">
+                    <div className="flex gap-2 items-center">
+                      <Image src={imdb} alt="" width={35} height={17} />
+                      <h2 className="text-[#9CA3AF] text-[12px]">
+                        {movie.vote_average}/100
+                      </h2>
+                    </div>
+                    <div className="flex gap-2">
+                      <Image src={tom} alt="" width={16} height={17} />
+                      <h2 className="text-[#9CA3AF] text-[12px]">
+                        {movie.randomPercentage.toFixed(1)}%
+                      </h2>
+                    </div>
                   </div>
-                </div>
-                <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">{getGenreNames(movie.genre_ids).join(", ")}</h2>
-              </Link>
-            )}
-          </div>
-        ))
-      )}
+                  <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
+                    {getGenreNames(movie.genre_ids).join(", ")}
+                  </h2>
+                </Link>
+              )}
+            </div>
+          ))
+        )}
+      </div>
     </div>
-   </div>
   );
 }
 

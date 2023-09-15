@@ -9,7 +9,7 @@ import play from "../assests/images/Play.svg";
 import imdb from "../assests/images/imdb.png";
 import tom from "../assests/images/tom.png";
 
-function Slider() {
+const Slider:React.FC=() =>{
   const [current, setCurrent] = useState(0);
   const length = Sliderdata.length;
   const timeout = useRef<null | NodeJS.Timeout>(null);
