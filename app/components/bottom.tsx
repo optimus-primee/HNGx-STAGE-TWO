@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const defaultClassName =
-  "lg:hidden fixed bottom-4 left-1/2 right-1/2 w-[330px] -translate-x-1/2";
+  "lg:hidden fixed bottom-6  left-1/2 right-1/2 w-[330px] -translate-x-1/2";
 
 const Bottom: React.FC = () => {
   const router = useRouter();
@@ -35,13 +35,13 @@ const Bottom: React.FC = () => {
     },
   ];
   const links = items.map((item) => (
-    <button onClick={() => router.push(item.url)}>
+    <button onClick={() => router.push(item.url)} className="text-[#BE123C]">
       <item.icon width={30} height={30} />
     </button>
   ));
   return (
     <div className={defaultClassName}>
-      <div className="absolute top-1/2 flex w-full -translate-y-1/2 justify-between px-4">
+      <div className="absolute top-1/2  flex w-full -translate-y-1/2 justify-between px-4">
         {links}
       </div>
     </div>
