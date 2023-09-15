@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Navbar = () => {
   return (
-    <div className="fixed  w-[100%] z-10">
+    <div className="fixed w-[100%] z-10">
       <div className="py-4 lg:px-24  px-4 flex justify-between items-center w-[100%]">
       
           <Link href="/" >
