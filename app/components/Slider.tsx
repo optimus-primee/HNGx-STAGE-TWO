@@ -8,6 +8,7 @@ import { Button } from "../components/buttons/button";
 import play from "../assests/images/Play.svg";
 import imdb from "../assests/images/imdb.png";
 import tom from "../assests/images/tom.png";
+import Navbar from "./Navbar";
 
 const Slider:React.FC=() =>{
   const [current, setCurrent] = useState(0);
@@ -63,6 +64,7 @@ const Slider:React.FC=() =>{
       {movies.map((movie: IMovie, index: number) => {
         return (
           <div className="z-1 w-[100%] sm:h-[100%] h-[100%] overflow-hidden" key={index}>
+            <Navbar/>
             {index === current && (
               <div className="bg-gradient-to-b from-black via-transparent to-transparent absolute top-0 left-0 w-[100%] sm:h-[100vh] h-[100vh] ">
                  <img
@@ -102,6 +104,7 @@ const Slider:React.FC=() =>{
                     Watch Trailer
                   </Button>
                 </div>
+                
               </div>
             )}
           </div>

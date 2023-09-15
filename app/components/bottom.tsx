@@ -24,12 +24,12 @@ const Bottom: React.FC = () => {
       icon: MagnifyingGlassIcon,
     },
     {
-      url: "/notifications",
+      url: "/",
       text: "Notifications",
       icon: BellIcon,
     },
     {
-      url: "/notifications",
+      url: "/",
       text: "Notifications",
       icon: BellIcon,
     },
