@@ -87,6 +87,14 @@ const FeaturedMovies = () => {
           setIsLoading(false);
         }
       });
+      // Generate a random percentage for each movie and add it to the results
+      const moviesWithRandomPercentage = movies.map((movie) => ({
+        ...movie,
+        randomPercentage: getRandomPercentage(0, 100), // Adjust the range as needed
+      }));
+
+      // Store the movie results in the state
+      setMovies(moviesWithRandomPercentage);
   }, []);
 
   const loadMovieDetails = (movieId: number) => {
@@ -113,7 +121,7 @@ const FeaturedMovies = () => {
 
       <div className="">
         <div className="relative sm:px-24 px-4 pt-32 grid gap-4 sm:grid-cols-4 w-[100%]">
-          {movies.map((movie) => (
+          {movies.slice(0, 10).map((movie) => (
             <div key={movie.id} className="mx-auto flex-none relative">
               {/* Render movie details for each movie in the 'movies' array */}
               <Link
@@ -142,7 +150,7 @@ const FeaturedMovies = () => {
                     <div className="flex gap-2">
                       <Image src={tom} alt="" width={16} height={17} />
                       <h2 className="text-[#9CA3AF] text-[12px]">
-                  20
+                  20%
                       </h2>
                     </div>
                   </div>
