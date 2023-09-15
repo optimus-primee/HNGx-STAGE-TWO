@@ -8,7 +8,7 @@ import FeaturedMovies from "./FeaturedMovies";
 function Hero() {
   return (
     <div className="h-[100vh]">
-      <Slider />
+    
     
      
     </div>
