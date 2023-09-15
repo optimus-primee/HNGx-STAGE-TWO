@@ -160,9 +160,11 @@ const FeaturedMovies = () => {
               >
                 <div className="sm:w-[250px] h-[370px] w-[100%] relative">
                   <img
-                    src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+                    src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path || movie?.poster_path}`}
                     alt={movie.title}
                     className="w-[100%] h-[100%] object-cover "
+                    data-testid="movie-poster"
+                    
                     onLoad={() => setIsLoading(false)}
                   />
                   <div className="absolute right-2 top-2 cursor-pointer">
@@ -183,10 +185,10 @@ const FeaturedMovies = () => {
                 </button>
                   </div>
                 </div>
-                <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3">
+                <h2 className="text-[#9CA3AF] text-[12px] font-bold mt-3" data-testid="movie-release-date">
                   {movie.release_date}
                 </h2>
-                <h2 className="text-[#4f70b7] text-sm my-3">{movie.title}</h2>
+                <h2 className="text-[#4f70b7] text-sm my-3" data-testid="movie-title">{movie.title}</h2>
                 <div className="flex justify-between items-center sm:w-[250px] w-[100%]">
                   <div className="flex gap-2 items-center">
                     <Image src={imdb} alt="" width={35} height={17} />
