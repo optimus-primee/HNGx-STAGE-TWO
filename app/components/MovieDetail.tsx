@@ -85,6 +85,7 @@ function MovieDetail({ movie }: { movie: IMovie }) {
               <p data-testid="movie-runtime">
                  {movie.runtime} 
               </p>
+              <span>Minutes</span>
             </div>
             <p className="text-[15px] my-2 " data-testid="movie-overview">{movie.overview}</p>
             <div>
