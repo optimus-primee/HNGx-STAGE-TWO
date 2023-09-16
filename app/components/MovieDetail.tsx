@@ -57,6 +57,16 @@ function MovieDetail({ movie }: { movie: IMovie }) {
       .padStart(2, "0")}-${date.getUTCDate().toString().padStart(2, "0")}`;
     return utcDateString;
   };
+
+let utcDate = '';
+  if (movie && movie.release_date) {
+    const date = new Date(movie.release_date);
+    if (!isNaN(date.getTime())) {
+      utcDate = date.toISOString();
+    }
+  }
+  console.log(utcDate);
+  
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="grid sm:grid-cols-6 sm:gap-5">
@@ -78,7 +88,7 @@ function MovieDetail({ movie }: { movie: IMovie }) {
               <h5 data-testid="movie-title">{movie.title}</h5> <span className="hidden sm:flex">•</span>
               <span>{movie.adult === false ? "PG-13" : "18+"}</span>
               <p data-testid="movie-release-date">
-                {`${formatDateToUTC(movie.release_date)} `}
+                {utcDate}
               </p>
               <span>(UTC)</span>
               <span className="hidden sm:flex">•</span>
