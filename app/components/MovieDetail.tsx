@@ -78,8 +78,9 @@ function MovieDetail({ movie }: { movie: IMovie }) {
               <h5 data-testid="movie-title">{movie.title}</h5> <span className="hidden sm:flex">•</span>
               <span>{movie.adult === false ? "PG-13" : "18+"}</span>
               <p data-testid="movie-release-date">
-                {`${formatDateToUTC(movie.release_date)} (UTC)`}
+                {`${formatDateToUTC(movie.release_date)} `}
               </p>
+              <span>(UTC)</span>
               <span className="hidden sm:flex">•</span>
               <p data-testid="movie-runtime">
                  {movie.runtime} 
