@@ -155,7 +155,7 @@ const FeaturedMovies = () => {
             <div key={movie.id} className="mx-auto flex-none relative" data-testid="movie-card">
               {/* Render movie details for each movie in the 'movies' array */}
               <Link
-                href={`/movie/${movie.id}`}
+                href={`/movies/${movie.id}`}
                 title={`More information about ${movie.title}`}
               >
                 <div className="sm:w-[250px] h-[370px] w-[100%] relative">
