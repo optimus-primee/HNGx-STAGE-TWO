@@ -89,7 +89,8 @@ let utcDate = '';
               <span>{movie.adult === false ? "PG-13" : "18+"}</span>
               <p data-testid="movie-release-date">
                 {utcDate}
-              </p><span>(UTC)</span>
+              </p>
+              <span>(UTC)</span>
               <span className="hidden sm:flex">•</span>
               <p data-testid="movie-runtime">
                  {movie.runtime} 
